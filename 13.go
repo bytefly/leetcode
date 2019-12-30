@@ -88,7 +88,7 @@ func main() {
 		"IV":       4,
 		"IX":       9,
 		"LVIII":    58,
-		"MCDLXXVI": 1676,
+		"MCDLXXVI": 1476,
 		"MCMXCIV":  1994,
 	}
 	for k, v := range testcase {
