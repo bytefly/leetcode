@@ -5,70 +5,59 @@ import (
 )
 
 func romanToInt(s string) int {
-	specStr := map[int]string{4: "IV", 9: "IX", 40: "XL", 90: "XC", 400: "CD", 900: "CM"}
+	specNum := map[int]string{4: "IV", 9: "IX", 40: "XL", 90: "XC", 400: "CD", 900: "CM"}
 	constChar := map[byte]int{'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}
 	constNum := map[int]byte{1: 'I', 5: 'V', 10: 'X', 50: 'L', 100: 'C', 500: 'D', 1000: 'M'}
 
-	var ok1, ok2 bool
-	var num, v1, v2, t int
-	for i := len(s) - 1; i >= 0; {
-		v1, ok1 = constChar[s[i]]
-		if i > 0 {
-			v2, ok2 = constChar[s[i-1]]
-		}
-		//invalid character
-		if !ok1 || (i > 0 && !ok2) {
+	var i, num int
+	for i < len(s) {
+		var v1, v2 int
+		v1, ok1 := constChar[s[i]]
+		if !ok1 {
 			return -1
 		}
 
-		//fmt.Println(i, v1, v2, num)
-		if i == 0 {
-			if v1 > num || s[i] == s[i+1] {
-				if len(s) > 1 { //ignore single char check
-					_, ok1 := specStr[num+v1]
-					_, ok2 := constNum[num+v1]
-					if ok1 || ok2 {
-						return -1
-					}
-				}
-
-				num += v1
-			} else {
-				num = -1
-			}
-			break
-		}
-
-		if v2 >= v1 {
-			t = v1 + v2
-			_, ok1 := specStr[t]
-			_, ok2 := constNum[t]
-			if ok1 || ok2 {
+		if i < len(s)-1 {
+			_, ok2 := constChar[s[i+1]]
+			if !ok2 {
 				return -1
 			}
-
-			if t > num {
-				num += t
-			} else {
-				return -1
-			}
+			v2 = constChar[s[i+1]]
 		}
-		if v1 > v2 {
-			t = v1 - v2
-			_, ok1 := specStr[t]
-			//not the special num in the map or same with prev special integer
-			if ok1 {
-				if t > num {
-					num += t
-				} else {
+
+		if v1 >= v2 {
+			num += v1
+			if i > 0 {
+				if _, ok1 := specNum[num]; ok1 { //for IIII
 					return -1
 				}
-			} else {
+				if _, ok1 := constNum[num]; ok1 { //for IVI
+					return -1
+				}
+			}
+			i++
+			continue
+		}
+
+		//handle special number
+		t := v2 - v1
+		if _, ok1 := specNum[t]; !ok1 {
+			return -1
+		}
+		if i > 0 && num <= t { //for IVIX/IVIV
+			return -1
+		}
+
+		num += t
+		if i > 0 {
+			if _, ok1 := specNum[num]; ok1 { //for VIV
+				return -1
+			}
+			if _, ok1 := constNum[num]; ok1 { //for VIIV
 				return -1
 			}
 		}
-
-		i -= 2
+		i += 2
 	}
 
 	return num
