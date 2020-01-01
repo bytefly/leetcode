@@ -9,24 +9,17 @@ func isPalindrome(x int) bool {
 		return false
 	}
 
-	var num, prev int
-	c := 10
+	var revert int
+	num := x
 	//convert form lower to higher
-	for {
-		//get current digit
-		ch := x%c - prev
-		ch /= c / 10
-		//add to the num after multiple with 10
-		num = num*10 + ch
-		prev = x % c
-		//stopped when get to the highest place
-		if x/c == 0 {
-			break
-		}
-		c *= 10
+	//stopped when get to the highest place
+	for x > 0 {
+		//add to the revert after multiple with 10
+		revert = revert*10 + x%10
+		x /= 10
 	}
 
-	if x != num {
+	if num != revert {
 		return false
 	}
 	return true
