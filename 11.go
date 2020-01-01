@@ -7,22 +7,25 @@ import (
 func maxArea(height []int) int {
 	maxStart, maxEnd := -1, -1
 	maxV := 0
-	for i := 0; i < len(height); i++ {
-		for j := i + 1; j < len(height); j++ {
-			curHeight := height[i]
-			if height[i] > height[j] {
-				curHeight = height[j]
-			}
+	l, r := 0, len(height)-1
+	for l < r {
+		curHeight := height[l]
+		curWidth := r - l
+		if height[l] > height[r] {
+			curHeight = height[r]
+			r--
+		} else {
+			l++
+		}
 
-			curV := (j - i) * curHeight
-			if curV > maxV {
-				maxV = curV
-				maxStart, maxEnd = i, j
-			}
+		curV := curWidth * curHeight
+		if curV > maxV {
+			maxV = curV
+			maxStart, maxEnd = l, r
 		}
 	}
 	_, _ = maxStart, maxEnd
-	fmt.Println(maxStart, maxEnd, maxV)
+	//fmt.Println(maxStart, maxEnd, maxV)
 	return maxV
 }
 
