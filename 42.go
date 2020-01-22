@@ -4,33 +4,31 @@ import (
 	"fmt"
 )
 
-func trap(height []int) int {
-	var maxHeight, ans int
-
-	//find the max height
-	for i := 0; i < len(height); i++ {
-		if height[i] > maxHeight {
-			maxHeight = height[i]
-		}
+func max(a, b int) int {
+	if a >= b {
+		return a
 	}
-	if maxHeight < 1 || len(height) <= 1 {
+	return b
+}
+
+func trap(height []int) int {
+	if len(height) <= 2 {
 		return 0
 	}
 
-	for i := 1; i <= maxHeight; i++ {
-		start, end := -1, -1
-		for j := 1; j < len(height); j++ {
-			if height[j-1] > height[j] && height[j] < i && height[j-1] >= i {
-				start = j - 1
-			}
-			if height[j-1] <= height[j] && height[j] >= i {
-				end = j
-				if start >= 0 {
-					ans += (end - 1 - start)
-					fmt.Println(start, end, i)
-				}
-				start, end = -1, -1
-			}
+	l, r := 1, len(height)-2
+	lmax, rmax := height[l-1], height[r+1]
+	ans := 0
+
+	for l <= r {
+		lmax = max(lmax, height[l])
+		rmax = max(rmax, height[r])
+		if lmax < rmax {
+			ans += lmax - height[l]
+			l++
+		} else {
+			ans += rmax - height[r]
+			r--
 		}
 	}
 	return ans
