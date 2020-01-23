@@ -24,16 +24,17 @@ func rotateRight(head *ListNode, k int) *ListNode {
 		p = p.Next
 		length++
 	}
+	length++
 	//make the ring circle
 	p.Next = head
 
-	cnt := k % (length + 1)
+	cnt := k % length
 	p = head
 	i := 0
 	for {
 		if i == cnt {
 			newHead = p
-		} else if i > k && p.Next == newHead {
+		} else if i > cnt && p.Next == newHead {
 			//break the ring circle
 			p.Next = nil
 			break
