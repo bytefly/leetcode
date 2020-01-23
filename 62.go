@@ -28,7 +28,7 @@ func rotateRight(head *ListNode, k int) *ListNode {
 	//make the ring circle
 	p.Next = head
 
-	cnt := k % length
+	cnt := length - k%length
 	p = head
 	i := 0
 	for {
