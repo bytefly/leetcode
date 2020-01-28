@@ -12,7 +12,7 @@ type ListNode struct {
 func isPalindrome(head *ListNode) bool {
 	ans := true
 	if head == nil {
-		return false
+		return true
 	}
 
 	//find the middle node
