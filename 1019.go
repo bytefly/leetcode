@@ -10,22 +10,22 @@ type ListNode struct {
 }
 
 func nextLargerNodes(head *ListNode) []int {
-	ans := make([]int, 0)
+    nums := make([]int, 0)
+    monoStack := make([]int, 0)
 	p := head
 	for p != nil {
-		find := false
-		for q := p.Next; q != nil; q = q.Next {
-			if q.Val > p.Val {
-				ans = append(ans, q.Val)
-				find = true
-				break
-			}
-		}
-		if !find {
-			ans = append(ans, 0)
-		}
+        nums = append(nums, p.Val)
 		p = p.Next
 	}
+
+	ans := make([]int, len(nums))
+    for i := 0; i < len(nums); i++ {
+        for len(monoStack) > 0 && nums[monoStack[len(monoStack)-1]] < nums[i] {
+            ans[monoStack[len(monoStack)-1]] = nums[i]
+            monoStack = monoStack[:len(monoStack)-1]
+        }
+        monoStack = append(monoStack, i)
+    }
 	return ans
 }
 
