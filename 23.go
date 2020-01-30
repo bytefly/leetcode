@@ -13,6 +13,9 @@ func mergeKLists(lists []*ListNode) *ListNode {
 	var p, q, t *ListNode
 	dummy := &ListNode{0, nil}
 
+	if len(lists) == 0 {
+		return nil
+	}
 	for {
 		if len(lists) == 1 {
 			break
@@ -88,5 +91,6 @@ func main() {
 		createListNode([]int{2, 6})}
 	//lists := []*ListNode{createListNode([]int{1, 4, 5})}
 	//lists := []*ListNode{createListNode([]int{})}
+	//lists := []*ListNode{}*/
 	fmt.Println(getValFromListNode(mergeKLists(lists)))
 }
