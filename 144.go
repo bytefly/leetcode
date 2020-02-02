@@ -12,12 +12,22 @@ type TreeNode struct {
 
 func preorderTraversal(root *TreeNode) []int {
 	vals := make([]int, 0)
-	if root != nil {
-		vals = append(vals, root.Val)
-		left := preorderTraversal(root.Left)
-		vals = append(vals, left...)
-		right := preorderTraversal(root.Right)
-		vals = append(vals, right...)
+	stack := make([]*TreeNode, 0)
+	p := root
+	for {
+		for p != nil {
+			vals = append(vals, p.Val)
+			stack = append(stack, p)
+			p = p.Left
+		}
+
+		if len(stack) > 0 {
+			p = stack[len(stack)-1]
+			stack = stack[:len(stack)-1]
+			p = p.Right
+		} else {
+			break
+		}
 	}
 
 	return vals
