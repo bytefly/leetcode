@@ -5,29 +5,19 @@ import (
 )
 
 func canConstruct(ransomNote string, magazine string) bool {
-	noteMap := make(map[byte]int)
-	letterMap := make(map[byte]int)
+	var noteMap [26]int
+	var letterMap [26]int
 	for i := 0; i < len(ransomNote); i++ {
-		v, ok := noteMap[ransomNote[i]]
-		if !ok {
-			noteMap[ransomNote[i]] = 1
-		} else {
-			noteMap[ransomNote[i]] = v + 1
-		}
+			noteMap[ransomNote[i]-'a']++
 	}
 	for i := 0; i < len(magazine); i++ {
-		v, ok := letterMap[magazine[i]]
-		if !ok {
-			letterMap[magazine[i]] = 1
-		} else {
-			letterMap[magazine[i]] = v + 1
-		}
+			letterMap[magazine[i]-'a']++
 	}
 
 	for k, v := range noteMap {
-		if val, ok := letterMap[k]; !ok || val < v {
-			return false
-		}
+        if v > letterMap[k] {
+            return false
+        }
 	}
 	return true
 }
