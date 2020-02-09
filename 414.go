@@ -2,47 +2,34 @@ package main
 
 import (
 	"fmt"
+	"math"
 )
 
 func thirdMax(nums []int) int {
-	var first, second, third int
-	var firstFound, secondFound, thirdFound bool
+	first, second, third := math.Inf(-1), math.Inf(-1), math.Inf(-1)
 
-	for _, v := range nums {
-		if !firstFound || v >= first {
-			if !firstFound {
-				first = v
-				firstFound = true
-			} else if v != first {
-				if secondFound {
-					third = second
-					thirdFound = true
-				}
-				secondFound = true
+	for _, i := range nums {
+		v := float64(i)
+		if v >= first {
+			if v != first {
+				third = second
 				second = first
 				first = v
 			}
-		} else if !secondFound || v >= second {
-			if !secondFound {
-				second = v
-				secondFound = true
-			} else if v != second {
-				thirdFound = true
+		} else if v >= second {
+			if v != second {
 				third = second
 				second = v
 			}
-		} else if !thirdFound || v > third {
+		} else if v > third {
 			third = v
-			if !thirdFound {
-				thirdFound = true
-			}
 		}
 	}
 
-	if !thirdFound {
+	if math.IsInf(third, -1) {
 		third = first
 	}
-	return third
+	return int(third)
 }
 
 func main() {
