@@ -5,15 +5,19 @@ import (
 )
 
 func findDisappearedNumbers(nums []int) []int {
-	numMap := make([]int, len(nums))
-	for _, v := range nums {
-		numMap[v-1] = 1
+	for _, j := range nums {
+		if j < 0 {
+			j = -j
+		}
+		if nums[j-1] > 0 {
+			nums[j-1] = -nums[j-1]
+		}
 	}
 
 	var ans []int
-	for k, v := range numMap {
-		if v == 0 {
-			ans = append(ans, k+1)
+	for i, j := range nums {
+		if j > 0 {
+			ans = append(ans, i+1)
 		}
 	}
 	return ans
