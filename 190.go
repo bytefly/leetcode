@@ -2,17 +2,18 @@ package main
 
 import (
 	"fmt"
-	"strconv"
 )
 
 func reverseBits(num uint32) uint32 {
-	str := fmt.Sprintf("%032b", num)
-	ans := make([]byte, len(str))
-	for i := 0; i < len(str); i++ {
-		ans[i] = str[len(str)-1-i]
+	var ans uint32
+	for i := 0; i < 32; i++ {
+		ans *= 2
+		ans += num % 2
+
+		num /= 2
 	}
-	t, _ := strconv.ParseUint(string(ans), 2, 32)
-	return uint32(t)
+
+	return ans
 }
 
 func main() {
