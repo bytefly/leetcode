@@ -7,14 +7,9 @@ import (
 func trailingZeroes(n int) int {
 	var ans int
 
-	for i := 0; i <= n; i += 5 {
-		if i != 0 && i%5 == 0 {
-			t := i
-			for t >= 5 && t%5 == 0 {
-				ans++
-				t /= 5
-			}
-		}
+	for n > 0 {
+		ans += n / 5
+		n /= 5
 	}
 	return ans
 }
@@ -24,4 +19,5 @@ func main() {
 	fmt.Println(trailingZeroes(5))
 	fmt.Println(trailingZeroes(11))
 	fmt.Println(trailingZeroes(35))
+	fmt.Println(trailingZeroes(2147483647))
 }
