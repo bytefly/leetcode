@@ -5,15 +5,13 @@ import (
 )
 
 func addDigits(num int) int {
-	for num > 9 {
-		t := 0
-		for num > 0 {
-			t += num % 10
-			num /= 10
-		}
-		num = t
+	if num == 0 {
+		return 0
 	}
-	return num
+	if num%9 == 0 {
+		return 9
+	}
+	return num % 9
 }
 
 func main() {
