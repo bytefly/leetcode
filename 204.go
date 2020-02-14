@@ -6,12 +6,12 @@ import (
 
 func countPrimes(n int) int {
 	var ans int
-	primeTable := make([]byte, n)
+	primeTable := make([]bool, n)
 	for i := 2; i < n; i++ {
-		if 1 != primeTable[i] {
+		if !primeTable[i] {
 			ans++
 			for j := i + i; j < n; j += i {
-				primeTable[j] = 1
+				primeTable[j] = true
 			}
 		}
 	}
