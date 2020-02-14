@@ -4,24 +4,25 @@ import (
 	"fmt"
 )
 
-func isPrime(num int) bool {
-	for i := 2; i*i <= num; i++ {
-		if num%i == 0 {
-			return false
-		}
-	}
-	return true
-}
-
 func isUgly(num int) bool {
 	if num < 1 {
 		return false
 	}
-	if num == 1 {
-		return true
-	}
-	for i := 2; i <= num; i++ {
-		if isPrime(i) && num%i == 0 && i != 2 && i != 3 && i != 5 {
+	for {
+		if num == 1 {
+			break
+		}
+		t := num
+		if num%2 == 0 {
+			num >>= 1
+		}
+		if num%3 == 0 {
+			num /= 3
+		}
+		if num%5 == 0 {
+			num /= 5
+		}
+		if num == t {
 			return false
 		}
 	}
