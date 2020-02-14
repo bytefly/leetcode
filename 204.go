@@ -2,21 +2,17 @@ package main
 
 import (
 	"fmt"
-	"math"
 )
 
 func countPrimes(n int) int {
 	var ans int
+	primeTable := make([]byte, n)
 	for i := 2; i < n; i++ {
-		isPrime := true
-		for j := 2; j <= int(math.Sqrt(float64(i))); j++ {
-			if j != i && i%j == 0 {
-				isPrime = false
-				break
-			}
-		}
-		if isPrime {
+		if 1 != primeTable[i] {
 			ans++
+			for j := i + i; j < n; j += i {
+				primeTable[j] = 1
+			}
 		}
 	}
 	return ans
