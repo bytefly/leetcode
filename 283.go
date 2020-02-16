@@ -5,17 +5,11 @@ import (
 )
 
 func moveZeroes(nums []int) {
-	last := -1
+	last := 0
 	for i := 0; i < len(nums); i++ {
 		if nums[i] != 0 {
-			if last >= 0 {
-				nums[last], nums[i] = nums[i], nums[last]
-				last += 1
-			}
-		} else {
-			if last < 0 {
-				last = i
-			}
+			nums[last], nums[i] = nums[i], nums[last]
+			last += 1
 		}
 	}
 }
