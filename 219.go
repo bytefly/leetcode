@@ -7,15 +7,13 @@ import (
 func containsNearbyDuplicate(nums []int, k int) bool {
 	ints := make(map[int]int)
 	for i := 0; i < len(nums); i++ {
-		for j := i; j < i+k+1 && j < len(nums); j++ {
-			if _, ok := ints[nums[j]]; ok {
-				return true
-			} else {
-				ints[nums[j]]++
-			}
+		if _, ok := ints[nums[i]]; ok {
+			return true
+		} else {
+			ints[nums[i]]++
 		}
-		for k, _ := range ints {
-			delete(ints, k)
+		if len(ints) > k {
+			delete(ints, nums[i-k])
 		}
 	}
 	return false
