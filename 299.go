@@ -5,24 +5,21 @@ import (
 )
 
 func getHint(secret string, guess string) string {
-	state := make([]bool, len(secret))
+	state := make(map[byte]int)
 	var bullCnt, cowCnt int
-	for i := 0; i < len(guess); i++ {
+	for i := 0; i < len(secret); i++ {
 		if secret[i] == guess[i] {
 			bullCnt++
-			state[i] = true
 		}
+		state[secret[i]]++
 	}
 	for i := 0; i < len(guess); i++ {
-		for j := 0; j < len(secret); j++ {
-			//mark the first position
-			if secret[i] != guess[i] && secret[j] == guess[i] && !state[j] {
-				cowCnt++
-				state[j] = true
-				break
-			}
+		if v, ok := state[guess[i]]; ok && v > 0 {
+			cowCnt++
+			state[guess[i]]--
 		}
 	}
+	cowCnt -= bullCnt
 
 	return fmt.Sprintf("%dA%dB", bullCnt, cowCnt)
 }
