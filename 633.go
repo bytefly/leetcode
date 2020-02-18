@@ -6,11 +6,16 @@ import (
 )
 
 func judgeSquareSum(c int) bool {
-	for i := 0; i*i <= c; i++ {
-		m := c - i*i
-		j := int(math.Sqrt(float64(m)))
-		if j*j == m {
+	i, j := 0, int(math.Sqrt(float64(c)))
+
+	for i <= j {
+		if i*i+j*j == c {
 			return true
+		}
+		if i*i+j*j > c {
+			j--
+		} else {
+			i++
 		}
 	}
 	return false
