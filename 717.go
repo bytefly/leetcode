@@ -7,17 +7,10 @@ import (
 func isOneBitCharacter(bits []int) bool {
 	var i int
 	length := len(bits)
-	for i < length {
-		if i == length-1 {
-			return true
-		}
-		if bits[i] == 0 {
-			i++
-		} else {
-			i += 2
-		}
+	for i < length-1 {
+		i += bits[i] + 1
 	}
-	return false
+	return i == length-1
 }
 
 func main() {
