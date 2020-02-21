@@ -19,16 +19,23 @@ func confusingNumber(N int) bool {
 			return false
 		}
 
-		if num[left] == num[right] || (num[left] == '6' && num[right] == '9') || (num[left] == '9' && num[right] == '6') {
+		if (num[left] == num[right] && num[left] != '6' && num[left] != '9') ||
+			(num[left] == '6' && num[right] == '9') || (num[left] == '9' && num[right] == '6') {
 			cnt++
 		}
 		left++
 		right--
 	}
 
-	//invalid middle digit
-	if left == right && !m[num[left]-'0'] {
-		return false
+	if left == right {
+		//invalid middle digit
+		if !m[num[left]-'0'] {
+			return false
+		}
+		//middle digit is 6 or 9
+		if num[left] == '6' || num[left] == '9' {
+			return true
+		}
 	}
 	//same after rotate
 	if cnt == len(num)/2 {
