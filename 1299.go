@@ -4,14 +4,13 @@ import "fmt"
 
 func replaceElements(arr []int) []int {
 	ans := make([]int, len(arr))
-	for i := 0; i < len(arr)-1; i++ {
-		for j := i + 1; j < len(arr); j++ {
-			if arr[j] > ans[i] {
-				ans[i] = arr[j]
-			}
+	ans[len(ans)-1] = -1
+	for i := len(ans) - 2; i >= 0; i-- {
+		ans[i] = arr[i+1]
+		if ans[i+1] > ans[i] {
+			ans[i] = ans[i+1]
 		}
 	}
-	ans[len(ans)-1] = -1
 	return ans
 }
 
