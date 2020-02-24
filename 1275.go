@@ -41,18 +41,10 @@ func tictactoe(moves [][]int) string {
 	}
 
 	if m[0][0] == m[1][1] && m[1][1] == m[2][2] && m[1][1] != 0 {
-		if m[0][0] == 'A' {
-			return "A"
-		} else {
-			return "B"
-		}
+		return string(m[1][1])
 	}
 	if m[0][2] == m[1][1] && m[1][1] == m[2][0] && m[1][1] != 0 {
-		if m[1][1] == 'A' {
-			return "A"
-		} else {
-			return "B"
-		}
+		return string(m[1][1])
 	}
 
 	if len(moves) == 9 {
