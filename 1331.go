@@ -8,16 +8,19 @@ import (
 func arrayRankTransform(arr []int) []int {
 	ans := make([]int, len(arr))
 	nums := make([]int, len(arr))
+	m := make(map[int]int, len(arr))
 	copy(nums, arr)
 
 	sort.Ints(nums)
-	for i := 0; i < len(ans); i++ {
-		for j := 0; j < len(nums); j++ {
-			if nums[j] < arr[i] && (j == 0 || nums[j] != nums[j-1]) {
-				ans[i]++
-			}
+	next := 1
+	for i := 0; i < len(nums); i++ {
+		if _, ok := m[nums[i]]; !ok {
+			m[nums[i]] = next
+			next++
 		}
-		ans[i]++
+	}
+	for i := 0; i < len(ans); i++ {
+		ans[i] = m[arr[i]]
 	}
 
 	return ans
