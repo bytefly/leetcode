@@ -13,24 +13,17 @@ func daysBetweenDates(date1 string, date2 string) int {
 	meta2 := strings.Split(date2, "-")
 	start, end := meta1, meta2
 
-	for i := 0; i < 3; i++ {
-		if start[i] < end[i] {
-			break
-		}
-		if start[i] > end[i] {
-			start, end = end, start
-			break
-		}
+	if date1 > date2 {
+		start, end = end, start
 	}
 	//check if year is leap if it's divisable by 4 not 100 or by 400
 	isLeapYear := func(year int) bool {
-		if year%4 != 0 {
+		switch {
+		case year%4 != 0:
 			return false
-		}
-		if year%100 != 0 {
+		case year%100 != 0:
 			return true
-		}
-		if year%400 != 0 {
+		case year%400 != 0:
 			return false
 		}
 		return true
