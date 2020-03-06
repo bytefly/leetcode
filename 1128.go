@@ -2,52 +2,22 @@ package main
 
 import (
 	"fmt"
-	"sort"
 )
 
 func numEquivDominoPairs(dominoes [][]int) int {
-	var ans int
-
-	sort.SliceStable(dominoes, func(i, j int) bool {
-		if dominoes[i][0] <= dominoes[j][0] {
-			return true
-		}
-		return false
-	})
-	sort.SliceStable(dominoes, func(i, j int) bool {
-		if dominoes[i][0] == dominoes[j][0] && dominoes[i][1] <= dominoes[j][1] {
-			return true
-		}
-		return false
-	})
+	var ans, key int
 
 	m := make(map[int]int, len(dominoes))
-	for i, domino := range dominoes {
-		m[domino[0]] = i
+	for _, domino := range dominoes {
+		if domino[0] <= domino[1] {
+			key = domino[0]*10 + domino[1]
+		} else {
+			key = domino[1]*10 + domino[0]
+		}
+		m[key]++
 	}
-
-	for i := 1; i <= len(dominoes); i++ {
-		//multiple same [0] and [1]
-		if i == len(dominoes) || dominoes[i-1][0] != dominoes[i][0] || dominoes[i-1][1] != dominoes[i][1] {
-			n := i - 1
-			for n > 0 && dominoes[n-1][0] == dominoes[n][0] && dominoes[n-1][1] == dominoes[n][1] {
-				n--
-			}
-			ans += (i - n) * (i - n - 1) / 2
-		}
-
-		if i < len(dominoes) {
-			n, ok := m[dominoes[i][1]]
-			//multiple same cross [0][1]
-			if ok && n < i {
-				for n >= 0 && dominoes[n][0] == dominoes[i][1] {
-					if dominoes[n][1] == dominoes[i][0] {
-						ans++
-					}
-					n--
-				}
-			}
-		}
+	for _, v := range m {
+		ans += v * (v - 1) / 2
 	}
 
 	return ans
