@@ -8,31 +8,13 @@ type TreeNode struct {
 	Right *TreeNode
 }
 
-func maxDepth(root *TreeNode) int {
+func maxDepthDiameter(root *TreeNode) (int, int) {
 	if root == nil {
-		return 0
+		return 0, 0
 	}
 
-	maxLeft, maxRight := maxDepth(root.Left), maxDepth(root.Right)
-	if root.Left != nil {
-		maxLeft++
-	}
-	if root.Right != nil {
-		maxRight++
-	}
-
-	if maxLeft >= maxRight {
-		return maxLeft
-	}
-	return maxRight
-}
-
-func diameterOfBinaryTree(root *TreeNode) int {
-	if root == nil {
-		return 0
-	}
-
-	maxLeft, maxRight := maxDepth(root.Left), maxDepth(root.Right)
+	maxLeft, maxTotalLeft := maxDepthDiameter(root.Left)
+	maxRight, maxTotalRight := maxDepthDiameter(root.Right)
 	if root.Left != nil {
 		maxLeft++
 	}
@@ -41,13 +23,21 @@ func diameterOfBinaryTree(root *TreeNode) int {
 	}
 
 	max := maxLeft + maxRight
-	diameterOfLeft, diameterOfRight := diameterOfBinaryTree(root.Left), diameterOfBinaryTree(root.Right)
-	if max < diameterOfLeft {
-		max = diameterOfLeft
+	if max < maxTotalLeft {
+		max = maxTotalLeft
 	}
-	if max < diameterOfRight {
-		max = diameterOfRight
+	if max < maxTotalRight {
+		max = maxTotalRight
 	}
+
+	if maxLeft >= maxRight {
+		return maxLeft, max
+	}
+	return maxRight, max
+}
+
+func diameterOfBinaryTree(root *TreeNode) int {
+	_, max := maxDepthDiameter(root)
 	return max
 }
 
