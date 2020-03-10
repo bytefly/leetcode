@@ -16,9 +16,7 @@ func boldWords(words []string, S string) string {
 		for j := i + 1; j <= len(S); j++ {
 			if m[S[i:j]] {
 				for t := i; t < j; t++ {
-					if flag[t] == 0 {
-						flag[t] = 1
-					}
+					flag[t] = 1
 				}
 			}
 		}
