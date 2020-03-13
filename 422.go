@@ -9,7 +9,7 @@ func validWordSquare(words []string) bool {
 			if j == len(words) {
 				return false
 			}
-			//rows are too long, string is short
+			//a string is too long, columns are short
 			if i >= len(words[j]) {
 				return false
 			}
