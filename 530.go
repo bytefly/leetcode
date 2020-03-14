@@ -11,29 +11,31 @@ type TreeNode struct {
 	Right *TreeNode
 }
 
-func dfs(root *TreeNode) []int {
-	var nums []int
-	if root.Left != nil {
-		nums = dfs(root.Left)
-	}
-	nums = append(nums, root.Val)
-	if root.Right != nil {
-		t := dfs(root.Right)
-		nums = append(nums, t...)
-	}
-
-	return nums
-}
-
 func getMinimumDifference(root *TreeNode) int {
-	ans := math.MaxUint32
-	nums := dfs(root)
+	var stack []*TreeNode
 
-	for i := len(nums) - 1; i > 0; i-- {
-		t := nums[i] - nums[i-1]
-		if t < ans {
-			ans = t
+	prev, ans := -1, math.MaxUint32
+	p := root
+	for {
+		for p != nil {
+			stack = append(stack, p)
+			p = p.Left
 		}
+
+		if len(stack) == 0 {
+			break
+		}
+
+		p = stack[len(stack)-1]
+		stack = stack[:len(stack)-1]
+		if prev >= 0 {
+			t := p.Val - prev
+			if t < ans {
+				ans = t
+			}
+		}
+		prev = p.Val
+		p = p.Right
 	}
 
 	return ans
