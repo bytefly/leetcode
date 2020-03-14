@@ -18,7 +18,6 @@ func rangeSumBST(root *TreeNode, L int, R int) int {
 	}
 
 	if root.Val >= L && root.Val <= R {
-		fmt.Println("---", root.Val)
 		sum += root.Val
 	}
 
