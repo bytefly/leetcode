@@ -14,7 +14,6 @@ func findTarget(root *TreeNode, k int) bool {
 	var stack []*TreeNode
 	var vals []int
 
-	m := make(map[int]bool)
 	p := root
 	for p != nil {
 		for p != nil {
@@ -26,7 +25,6 @@ func findTarget(root *TreeNode, k int) bool {
 			p = stack[len(stack)-1]
 			stack = stack[:len(stack)-1]
 			vals = append(vals, p.Val)
-			m[p.Val] = true
 
 			p = p.Right
 			if p != nil {
@@ -35,10 +33,16 @@ func findTarget(root *TreeNode, k int) bool {
 		}
 	}
 
-	for i := 0; i < len(vals); i++ {
-		t := k - vals[i]
-		if t != vals[i] && m[t] {
+	l, r := 0, len(vals)-1
+	for l < r {
+		t := vals[l] + vals[r]
+		switch {
+		case t == k:
 			return true
+		case t > k:
+			r--
+		case t < k:
+			l++
 		}
 	}
 	return false
