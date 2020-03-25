@@ -6,7 +6,7 @@ func search(nums []int, target int) int {
 	left, right := 0, len(nums)-1
 	t := right
 
-	if right < 0 {
+	if len(nums) == 0 {
 		return -1
 	}
 	if nums[t] < nums[left] {
@@ -18,20 +18,14 @@ func search(nums []int, target int) int {
 		}
 	}
 
-	right = t
-	for left <= right {
-		mid := left + (right-left)>>1
-		switch {
-		case nums[mid] == target:
-			return mid
-		case nums[mid] > target:
-			right = mid - 1
-		case nums[mid] < target:
-			left = mid + 1
-		}
+	if target >= nums[0] && target <= nums[t] {
+		right = t
+	} else if t < len(nums)-1 && target >= nums[t+1] && target <= nums[right] {
+		left, right = t+1, len(nums)-1
+	} else {
+		return -1
 	}
 
-	left, right = t+1, len(nums)-1
 	for left <= right {
 		mid := left + (right-left)>>1
 		switch {
