@@ -3,7 +3,6 @@ package main
 import "fmt"
 
 func groupAnagrams(strs []string) [][]string {
-	var ans [][]string
 	var t [26]int
 
 	m := make(map[[26]int][]string)
@@ -12,20 +11,17 @@ func groupAnagrams(strs []string) [][]string {
 			t[b-'a']++
 		}
 
-		_, ok := m[t]
-		if ok {
-			m[t] = append(m[t], str)
-		} else {
-			m[t] = []string{str}
-		}
+		m[t] = append(m[t], str)
 
 		for i := 0; i < 26; i++ {
 			t[i] = 0
 		}
 	}
 
+	i, ans := 0, make([][]string, len(m))
 	for _, v := range m {
-		ans = append(ans, v)
+		ans[i] = v
+		i++
 	}
 	return ans
 }
