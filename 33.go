@@ -9,17 +9,23 @@ func search(nums []int, target int) int {
 	if len(nums) == 0 {
 		return -1
 	}
+	//find the largest position
 	if nums[t] < nums[left] {
-		for t >= 0 {
-			if nums[t] >= nums[0] {
+		for left <= t {
+			mid := left + (t-left)>>1
+			if nums[mid] > nums[mid+1] {
+				t = mid
 				break
+			} else if nums[mid] > nums[right] {
+				left = mid + 1
+			} else {
+				t = mid - 1
 			}
-			t--
 		}
 	}
 
 	if target >= nums[0] && target <= nums[t] {
-		right = t
+		left, right = 0, t
 	} else if t < len(nums)-1 && target >= nums[t+1] && target <= nums[right] {
 		left, right = t+1, len(nums)-1
 	} else {
@@ -53,4 +59,5 @@ func main() {
 	fmt.Println(search([]int{4, 5, 6, 0, 1, 2}, 1))
 	fmt.Println(search([]int{4, 5, 6, 0, 1, 2}, 5))
 	fmt.Println(search([]int{4, 5, 6, 0, 1, 2}, 3))
+	fmt.Println(search([]int{3, 4, 5, 6, 7, 1, 2}, 4))
 }
