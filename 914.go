@@ -10,30 +10,19 @@ func gcd(m, n int) int {
 }
 
 func hasGroupsSizeX(deck []int) bool {
-	var prevCnt, prevX int
-
 	m := make(map[int]int)
 	for _, num := range deck {
 		m[num]++
 	}
 
+	x := m[deck[0]]
 	for _, cnt := range m {
-		if prevCnt == 0 {
-			prevCnt = cnt
-			if len(m) == 1 {
-				prevX = cnt
-			}
-		} else {
-			t := gcd(cnt, prevCnt)
-			if prevX != 0 && t != prevX {
-				return false
-			}
-			prevX = t
+		if cnt != x {
+			x = gcd(cnt, x)
 		}
-	}
-
-	if prevX == 1 {
-		return false
+		if x == 1 {
+			return false
+		}
 	}
 
 	return true
