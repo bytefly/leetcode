@@ -15,14 +15,15 @@ func minimumLengthEncoding(words []string) int {
 	})
 
 	for _, word := range words {
-		shortLen := 0
+		find := false
 		for _, str := range m {
 			if strings.HasSuffix(str, word) {
-				shortLen = len(str)
+				find = true
+				break
 			}
 		}
 
-		if shortLen == 0 {
+		if !find {
 			m = append(m, word)
 			ans += len(word) + 1
 		}
