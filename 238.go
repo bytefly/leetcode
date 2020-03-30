@@ -4,21 +4,20 @@ import "fmt"
 
 func productExceptSelf(nums []int) []int {
 	ans := make([]int, len(nums))
-	for i := 0; i < len(ans); i++ {
-		ans[i] = 1
+	l := make([]int, len(nums))
+	r := make([]int, len(nums))
+
+	l[0], r[len(r)-1] = 1, 1
+	for i := 1; i < len(nums); i++ {
+		l[i] = nums[i-1] * l[i-1]
+	}
+	for i := len(r) - 2; i >= 0; i-- {
+		r[i] = nums[i+1] * r[i+1]
 	}
 
 	for i := 0; i < len(nums); i++ {
-		for j := i + 1; j < len(nums); j++ {
-			ans[j] *= nums[i]
-		}
+		ans[i] = l[i] * r[i]
 	}
-	for i := len(nums) - 1; i >= 0; i-- {
-		for j := i - 1; j >= 0; j-- {
-			ans[j] *= nums[i]
-		}
-	}
-
 	return ans
 }
 
