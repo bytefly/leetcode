@@ -3,31 +3,11 @@ package main
 import "fmt"
 
 func lastRemaining(n int, m int) int {
-	var t, ans int
-	nums := make([]bool, n)
+	var ans int
 
-	if m == 1 {
-		return n - 1
+	for i := 2; i <= n; i++ {
+		ans = (ans + m) % i
 	}
-	for {
-		cnt := 0
-		for i := 0; i < n; i++ {
-			if !nums[i] {
-				t = (t + 1) % m
-				if t == 0 {
-					nums[i] = true
-				} else {
-					ans = i
-					cnt++
-				}
-			}
-		}
-
-		if cnt == 1 {
-			break
-		}
-	}
-
 	return ans
 }
 
