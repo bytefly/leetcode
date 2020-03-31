@@ -2,14 +2,18 @@ package main
 
 import (
 	"fmt"
-	"sort"
 )
 
 func sortArray(nums []int) []int {
-	ans := make([]int, len(nums))
-	copy(ans, nums)
-	sort.Ints(ans)
-	return ans
+	for i := 0; i < len(nums)-1; i++ {
+		for j := i + 1; j < len(nums); j++ {
+			if nums[j] < nums[i] {
+				nums[i], nums[j] = nums[j], nums[i]
+			}
+		}
+	}
+
+	return nums
 }
 
 func main() {
